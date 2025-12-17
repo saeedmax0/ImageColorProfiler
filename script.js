@@ -206,8 +206,8 @@ class ImageColorProfiler {
             });
 
             // Update centroids
-            centroids = clusters.map(cluster => {
-                if (cluster.length === 0) return centroids[0];
+            centroids = clusters.map((cluster, idx) => {
+                if (cluster.length === 0) return centroids[idx];
                 
                 const sum = cluster.reduce((acc, color) => ({
                     r: acc.r + color.r,
@@ -265,7 +265,7 @@ class ImageColorProfiler {
 
             // Add click to copy functionality
             const copyBtn = colorBox.querySelector('.copy-btn');
-            copyBtn.addEventListener('click', () => this.copyToClipboard(color.hex));
+            copyBtn.addEventListener('click', (e) => this.copyToClipboard(color.hex, e.target));
 
             palette.appendChild(colorBox);
         });
@@ -495,8 +495,8 @@ class ImageColorProfiler {
 
         // Add copy functionality
         const copyBtn = codeDiv.querySelector('.copy-gradient-btn');
-        copyBtn.addEventListener('click', () => {
-            this.copyToClipboard(`background: ${gradientCSS};`);
+        copyBtn.addEventListener('click', (e) => {
+            this.copyToClipboard(`background: ${gradientCSS};`, e.target);
         });
     }
 
@@ -591,18 +591,19 @@ class ImageColorProfiler {
         return (lighter + 0.05) / (darker + 0.05);
     }
 
-    async copyToClipboard(text) {
+    async copyToClipboard(text, buttonElement = null) {
         try {
             await navigator.clipboard.writeText(text);
             // Show a temporary success message
-            const btn = event.target;
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied!';
-            btn.classList.add('bg-green-600');
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove('bg-green-600');
-            }, 1500);
+            if (buttonElement) {
+                const originalText = buttonElement.textContent;
+                buttonElement.textContent = 'Copied!';
+                buttonElement.classList.add('bg-green-600');
+                setTimeout(() => {
+                    buttonElement.textContent = originalText;
+                    buttonElement.classList.remove('bg-green-600');
+                }, 1500);
+            }
         } catch (err) {
             console.error('Failed to copy:', err);
             alert('Failed to copy to clipboard');

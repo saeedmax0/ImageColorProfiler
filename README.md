@@ -1,8 +1,8 @@
 # ImageColorProfiler
 
-**Advanced color and palette analysis for images — directly in the browser**
-
 ImageColorProfiler is a lightweight, web-based tool built with **HTML**, **JavaScript**, and **Tailwind CSS (CDN)** that performs deep color analysis on images without any server-side processing. It is designed for designers, developers, and branding teams who need precise insight into color usage, contrast, and accessibility.
+
+> **Advanced color and palette analysis for images directly in the browser**
 
 ---
 

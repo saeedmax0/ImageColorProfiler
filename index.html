@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageColorProfiler - Advanced Color Analysis Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .color-box {
+            transition: transform 0.2s;
+        }
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+        .histogram-bar {
+            transition: height 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-2">🎨 ImageColorProfiler</h1>
+            <p class="text-purple-100">Advanced color and palette analysis — directly in the browser</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Upload Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Upload Image</h2>
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+                <input type="file" id="imageInput" accept="image/*" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <button id="analyzeBtn" class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
+                    Analyze Image
+                </button>
+            </div>
+            <p class="text-sm text-gray-500 mt-2">Supported formats: JPEG, PNG, WebP, AVIF, HEIC (where supported)</p>
+        </section>
+
+        <!-- Image Preview -->
+        <section id="previewSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Image Preview</h2>
+            <div class="flex justify-center">
+                <canvas id="canvas" class="max-w-full h-auto border border-gray-300 rounded"></canvas>
+            </div>
+        </section>
+
+        <!-- Color Profile Detection -->
+        <section id="profileSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📊 Color Profile</h2>
+            <div id="profileInfo" class="space-y-2"></div>
+        </section>
+
+        <!-- Dominant Colors Palette -->
+        <section id="paletteSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">🎨 Dominant Colors Palette</h2>
+            <div id="palette" class="grid grid-cols-2 md:grid-cols-5 gap-4"></div>
+        </section>
+
+        <!-- Color Histograms -->
+        <section id="histogramSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📈 Color Histograms</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- RGB Histogram -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">RGB Distribution</h3>
+                    <canvas id="rgbHistogram" class="w-full border border-gray-300 rounded" height="200"></canvas>
+                </div>
+                <!-- HSV Histogram -->
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-3">HSV Distribution</h3>
+                    <canvas id="hsvHistogram" class="w-full border border-gray-300 rounded" height="200"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- WCAG Contrast Checker -->
+        <section id="contrastSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">♿ WCAG Contrast Checker</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foreground Color</label>
+                    <div class="flex gap-2">
+                        <input type="color" id="fgColorPicker" class="h-10 w-20 cursor-pointer">
+                        <input type="text" id="fgColorInput" placeholder="#000000" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                    <div class="flex gap-2">
+                        <input type="color" id="bgColorPicker" class="h-10 w-20 cursor-pointer">
+                        <input type="text" id="bgColorInput" placeholder="#FFFFFF" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                </div>
+            </div>
+            <button id="checkContrastBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                Check Contrast
+            </button>
+            <div id="contrastResults" class="mt-4"></div>
+        </section>
+
+        <!-- CSS Gradient Generator -->
+        <section id="gradientSection" class="bg-white rounded-lg shadow-md p-6 mb-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">🌈 CSS Gradient Generator</h2>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Gradient Type</label>
+                <select id="gradientType" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="linear">Linear</option>
+                    <option value="radial">Radial</option>
+                </select>
+            </div>
+            <div id="gradientDirection" class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Direction</label>
+                <select id="directionSelect" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <option value="to right">To Right</option>
+                    <option value="to left">To Left</option>
+                    <option value="to bottom">To Bottom</option>
+                    <option value="to top">To Top</option>
+                    <option value="to bottom right">To Bottom Right</option>
+                    <option value="135deg">135 Degrees</option>
+                </select>
+            </div>
+            <button id="generateGradientBtn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                Generate Gradient
+            </button>
+            <div id="gradientPreview" class="mt-4 h-32 rounded-lg border border-gray-300"></div>
+            <div id="gradientCode" class="mt-4"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-300">
+                <strong>ImageColorProfiler</strong> - Fast. Private. Accurate. Browser-only.
+            </p>
+            <p class="text-gray-400 text-sm mt-2">
+                All processing happens locally in your browser. Images are never uploaded.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

